@@ -12,4 +12,6 @@ export const router = createBrowserRouter([
       { path: '/capture-2', element: <CapturePage2 /> },
     ]
   },
-]);
+], {
+  basename: import.meta.env.BASE_URL,
+});
