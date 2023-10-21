@@ -1,0 +1,7 @@
+.VideoCapture__video {
+  width: 300px;
+}
+
+.VideoCapture__canvas {
+  display: none;
+}
