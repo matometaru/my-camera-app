@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { useMount } from 'react-use';
 import useDevice from './hooks/useDevice';
 import { getMediaTrackSettings } from './utils';
+import VideoCapture from './componetns/VideoCapture';
 
 const videoConstraints: MediaTrackConstraints = {
   facingMode: 'environment'
@@ -9,11 +9,13 @@ const videoConstraints: MediaTrackConstraints = {
 
 function App() {
   const deviceHook = useDevice();
+  const [mediaStream, setMediaStream] = useState<MediaStream | null>(null);
   const [settings, setSettings] = useState<MediaTrackSettings>({});
- 
+  
 
-  useMount(async () => {
+  const startVideoCapture = (async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: false })
+    setMediaStream(stream)
     setSettings(getMediaTrackSettings(stream))
   })
 
@@ -28,6 +30,15 @@ function App() {
       <pre>
         {JSON.stringify(settings, null, 2)}
       </pre>
+      { mediaStream && (
+        <VideoCapture
+          mediaStream={mediaStream}
+          onCapture={(base64Image) => {
+            console.log(base64Image)
+          }}
+        />
+      )}
+      <button onClick={startVideoCapture}>ビデオ開始</button>
     </>
   )
 }
