@@ -6,8 +6,8 @@ function App() {
   return (
     <>
       <ul>
-        <li><a href="/">サイズ未指定</a></li>
-        <li><a href="/capture-2">サイズ指定</a></li>
+        <li><a href={import.meta.env.BASE_URL}>サイズ未指定</a></li>
+        <li><a href={`${import.meta.env.BASE_URL}capture-2`}>サイズ指定</a></li>
       </ul>
       <RouterProvider router={router} />
     </>
