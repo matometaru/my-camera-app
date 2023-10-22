@@ -1,6 +1,7 @@
 import { Tabs } from 'antd'
 import type { TabsProps } from 'antd';
 import VideoCaptureManager from '../componetns/VideoCaptureManager'
+import Nav from '../componetns/Nav';
 
 const constraints_no_size: MediaStreamConstraints = {
   video: {
@@ -25,7 +26,9 @@ const CameraPage = () => {
 
   return (
     <>
+      <Nav />
       <h3>MediaStreamConstraintsのサイズを未指定</h3>
+      <p>iOSのブラウザでサイズ未指定の場合、カメラ1のビデオ開始 → カメラ2のビデオ開始を押すとvideo要素に表示されるサイズの幅と高さが逆なって表示されました。</p>
       <Tabs
         defaultActiveKey="1"
         items={tabItems}

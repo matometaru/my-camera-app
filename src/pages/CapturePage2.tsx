@@ -1,6 +1,7 @@
 import { Tabs } from 'antd'
 import type { TabsProps } from 'antd';
 import VideoCaptureManager from '../componetns/VideoCaptureManager'
+import Nav from '../componetns/Nav';
 
 const constraints: MediaStreamConstraints = {
   video: {
@@ -27,7 +28,9 @@ const CameraPage = () => {
 
   return (
     <>
+      <Nav />
       <h3>MediaStreamConstraintsのサイズを指定</h3>
+      <p>サイズを指定した場合、video要素には指定したサイズの映像が表示されます。</p>
       <Tabs
         defaultActiveKey="1"
         items={tabItems}

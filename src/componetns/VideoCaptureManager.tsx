@@ -2,6 +2,7 @@ import { useState } from 'react'
 import useDevice from '../hooks/useDevice';
 import useModal from '../hooks/useModal';
 import VideoCapture from '../componetns/VideoCapture';
+import { useUnmount } from 'react-use';
 import { Modal, Flex } from 'antd'
 
 type Props = {
@@ -26,6 +27,10 @@ const VideoCaptureManager = ({ constraints }: Props) => {
     })
     setMediaStream(null)
   }
+
+  useUnmount(() => {
+    stopVideoCapture()
+  })
 
   return (
     <div className="VideoCaptureManager">
