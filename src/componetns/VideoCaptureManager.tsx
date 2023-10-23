@@ -73,7 +73,7 @@ const VideoCaptureManager = ({ constraints }: Props) => {
         onCancel={capturedModal.handleClose}
         footer={null}
       >
-        <img src={base64Image} />
+        <img src={base64Image} style={{ width: '100%', height: 'auto' }} />
       </Modal>
     </div>
   )

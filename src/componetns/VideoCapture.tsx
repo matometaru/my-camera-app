@@ -39,10 +39,17 @@ const VideoCapture = ({ mediaStream, onCapture }: Props) => {
   }
 
   const captureFrame = () => {
+    if (!videoRef.current || !canvasRef.current) return;
+
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
     
-    if (!ctx || !canvas) return;
+    if (!ctx) return;
+
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
+
+    ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
     const base64Image = canvas.toDataURL('image/jpeg');
     onCapture(base64Image);
   };
