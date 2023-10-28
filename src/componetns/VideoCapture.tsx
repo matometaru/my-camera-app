@@ -3,6 +3,7 @@ import './VideoCapture.css';
 import { useRef, useEffect, useState } from 'react';
 import { getMediaTrackSettings } from '../utils';
 import { Flex } from 'antd';
+import { captureElementScreenshot } from 'video-canvas-screenshot'
 
 type Props = {
   mediaStream: MediaStream;
@@ -11,16 +12,13 @@ type Props = {
 
 const VideoCapture = ({ mediaStream, onCapture }: Props) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [settings, setSettings] = useState<MediaTrackSettings>({});
   
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
     const videoElement = videoRef.current;
     setSettings(getMediaTrackSettings(mediaStream))
 
-    if (ctx && canvas && videoElement) {
+    if (videoElement) {
       videoElement.srcObject = mediaStream
     }
   }, [mediaStream]);
@@ -39,19 +37,12 @@ const VideoCapture = ({ mediaStream, onCapture }: Props) => {
   }
 
   const captureFrame = () => {
-    if (!videoRef.current || !canvasRef.current) return;
+    if (!videoRef.current) return;
 
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
-    
-    if (!ctx) return;
-
-    canvas.width = videoRef.current.videoWidth;
-    canvas.height = videoRef.current.videoHeight;
-
-    ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-    const base64Image = canvas.toDataURL('image/jpeg');
-    onCapture(base64Image);
+    captureElementScreenshot(videoRef.current, (imageData) => {
+      console.log(imageData)
+      onCapture(imageData);
+    });
   };
 
   return (
@@ -65,7 +56,6 @@ const VideoCapture = ({ mediaStream, onCapture }: Props) => {
       <div className="VideoCapture">
         <div>
           <video ref={videoRef} autoPlay muted playsInline className='VideoCapture__video' />
-          <canvas ref={canvasRef} className='VideoCapture__canvas' />
         </div>
         <Flex gap="small" style={{ marginTop: 16 }}>
           <button onClick={(event) => {

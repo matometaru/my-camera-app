@@ -6,8 +6,8 @@ import Nav from '../componetns/Nav';
 const constraints: MediaStreamConstraints = {
   video: {
     facingMode: 'environment',
-    width: { ideal: 1000 },
-    height: { ideal: 1000 },
+    width: { ideal: 1280 },
+    height: { ideal: 960 },
   },
   audio: false,
 }
